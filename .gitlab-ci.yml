@@ -20,12 +20,14 @@ before_script:
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
+  - gem install bundler
+  - bundle install
 
 stages:
   - build
-  - documentation
   - test
-  - betaUpload
+  - documentation
+  - deploy
 
 lintDebug:
   stage: build
@@ -51,6 +53,6 @@ debugTests:
     - ./gradlew -Pci --console=plain :app:testDebug
 
 uploadToFabric:
-  stage: betaUpload
+  stage: deploy
   script:
     - bundle exec fastlane beta
