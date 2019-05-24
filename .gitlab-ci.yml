@@ -46,4 +46,4 @@ docGen:
 deployBeta:
   stage: deploy
   script:
-   - bundle exec fastlane beta
+   - fastlane beta
