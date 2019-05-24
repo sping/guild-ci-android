@@ -21,28 +21,28 @@ stages:
   # - documentation
   - deploy
 
-lintDebug:
-  stage: build
-  script:
-    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+# lintDebug:
+#   stage: build
+#   script:
+#     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
-assembleDebug:
-  stage: build
-  script:
-    - ./gradlew assembleDebug
-  artifacts:
-    paths:
-    - app/build/outputs/
+# assembleDebug:
+#   stage: build
+#   script:
+#     - ./gradlew assembleDebug
+#   artifacts:
+#     paths:
+#     - app/build/outputs/
 
-debugTests:
-  stage: test
-  script:
-    - ./gradlew -Pci --console=plain :app:testDebug
+# debugTests:
+#   stage: test
+#   script:
+#     - ./gradlew -Pci --console=plain :app:testDebug
 
-docGen:
-  stage: documentation
-  script:
-    - ./gradlew dokka
+# docGen:
+#   stage: documentation
+#   script:
+#     - ./gradlew dokka
 
 deployBeta:
   stage: deploy
