@@ -1,9 +1,8 @@
-image: tripwire999/gitlab-ci-android-fastlane
+image: printeastwoodcz/gitlab-ci-android-fastlane
 
 before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
-  - gem install bundler
   - bundle install
 
 cache:
