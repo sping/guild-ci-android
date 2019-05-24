@@ -20,11 +20,16 @@ before_script:
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
+  - COPY Gemfile.lock
+  - COPY Gemfile .
+  - RUN gem install bundle
+  - RUN bundle install
 
 stages:
   - build
   - documentation
   - test
+  - betaUpload
 
 lintDebug:
   stage: build
@@ -48,3 +53,8 @@ debugTests:
   stage: test
   script:
     - ./gradlew -Pci --console=plain :app:testDebug
+
+uploadToFabric:
+  stage: betaUpload
+  script:
+    - bundle exec fastlane beta
