@@ -20,10 +20,6 @@ before_script:
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
-  - COPY Gemfile.lock
-  - COPY Gemfile .
-  - RUN gem install bundle
-  - RUN bundle install
 
 stages:
   - build
