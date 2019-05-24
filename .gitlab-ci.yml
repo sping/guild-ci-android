@@ -8,8 +8,6 @@ variables:
 before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
-  - bundle update --bundler
-  - bundle install
 
 cache:
   key: ${CI_PROJECT_ID}
