@@ -1,4 +1,4 @@
-image: openjdk:8-jdk
+image: iisue/alpine-android-fastlane
 
 variables:
   ANDROID_COMPILE_SDK: "28"
@@ -20,13 +20,12 @@ before_script:
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
-  - brew install bundler
-  - bundle install
 
 stages:
   - build
   - test
   - documentation
+  - deploy
 
 lintDebug:
   stage: build
@@ -50,3 +49,8 @@ docGen:
   stage: documentation
   script:
     - ./gradlew dokka
+
+deployBeta:
+  stage: deploy
+  script:
+   - bundle exec fastlane beta
