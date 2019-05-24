@@ -1,4 +1,4 @@
-image: Tripwire999/gitlab-ci-android-fastlane
+image: tripwire999/gitlab-ci-android-fastlane
 
 before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
