@@ -9,7 +9,7 @@ before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
   - gem update --system
-  - gem install bundler
+  - gem install bundler --force
   - bundle update --bundler
 
 cache:
