@@ -36,7 +36,7 @@ platform :android do
       task: 'assemble',
       build_type: 'Release',
       properties: {
-        'android.injected.signing.store.file' => 'GitViewer.jks',
+        'android.injected.signing.store.file' => './GitViewer.jks',
         'android.injected.signing.store.password' => ENV['KEYSTORE_PASS'],
         'android.injected.signing.key.alias' => ENV['KEYSTORE_ALIAS'],
         'android.injected.signing.key.password' => ENV['KEYSTORE_PASS']
