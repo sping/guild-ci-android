@@ -12,12 +12,17 @@
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
+KEYSTORE_PASS = ${KEYSTORE_PASS}
+KEYSTORE_ALIAS = ${KEYSTORE_ALIAS}
+FABRIC_TOKEN = ${FABRIC_TOKEN}
+FABRIC_BUILD_SECRET = ${FABRIC_BUILD_SECRET}
+RELEASE_SLACK_URL = ${RELEASE_SLACK_URL}
 
 # Pre-run checks
 before_all do
-  raise '.env not correctly set, it\'s missing the Android keystore stuff' unless ENV['KEYSTORE_PASS'] && ENV['KEYSTORE_PATH']
-  raise '.env not correctly set, it\'s missing Fabric credentials' unless ENV['FABRIC_TOKEN'] && ENV['FABRIC_BUILD_SECRET']
-  raise '.env not correctly set, it\'s missing the Slack url' unless ENV['RELEASE_SLACK_URL']
+  raise '.env not correctly set, it\'s missing the Android keystore stuff' unless KEYSTORE_PASS && KEYSTORE_ALIAS
+  raise '.env not correctly set, it\'s missing Fabric credentials' unless FABRIC_TOKEN && FABRIC_BUILD_SECRET
+  raise '.env not correctly set, it\'s missing the Slack url' unless RELEASE_SLACK_URL
 end
 
 default_platform(:android)
@@ -36,10 +41,10 @@ platform :android do
       task: 'assemble',
       build_type: 'Release',
       properties: {
-        'android.injected.signing.store.file' => ENV['KEYSTORE_PATH'],
-        'android.injected.signing.store.password' => ENV['KEYSTORE_PASS'],
-        'android.injected.signing.key.alias' => ENV['KEYSTORE_ALIAS'],
-        'android.injected.signing.key.password' => ENV['KEYSTORE_PASS']
+        'android.injected.signing.store.file' => './GitViewer.jks',
+        'android.injected.signing.store.password' => KEYSTORE_PASS,
+        'android.injected.signing.key.alias' => KEYSTORE_ALIAS,
+        'android.injected.signing.key.password' => KEYSTORE_PASS
       }
     )
   end
@@ -54,15 +59,15 @@ end
  # Upload release to Fabric
  private_lane :upload_to_fabric do
   crashlytics(
-    api_token: ENV['FABRIC_TOKEN'],
-    build_secret: ENV['FABRIC_BUILD_SECRET']
+    api_token: FABRIC_TOKEN,
+    build_secret: FABRIC_BUILD_SECRET
   )
 end
 
 # Notify slack a new release is released
 private_lane :send_slack_notification do |args|
   slack(
-    slack_url: ENV['RELEASE_SLACK_URL'],
+    slack_url: RELEASE_SLACK_URL,
     channel: "#ci_cd_guild",
     message: "#{args[:platform]} #{args[:type]} app released",
     payload: {
