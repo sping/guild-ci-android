@@ -18,37 +18,51 @@ cache:
   - .gradle/
 
 stages:
-  # - build
-  # - test
-  # - documentation
+  - build
+  - test
+  - documentation
   - deploy
 
-# lintDebug:
-#   stage: build
-#   script:
-#     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
-
-# assembleDebug:
-#   stage: build
-#   script:
-#     - ./gradlew assembleDebug
-#   artifacts:
-#     paths:
-#     - app/build/outputs/
-
-# debugTests:
-#   stage: test
-#   script:
-#     - ./gradlew -Pci --console=plain :app:testDebug
-
-# docGen:
-#   stage: documentation
-#   script:
-#     - ./gradlew dokka
-
-deployBeta:
-  stage: deploy
-  variables:
-    CI_DEBUG_TRACE: "true"
+lintDebug:
+  stage: build
   script:
-   - fastlane beta
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+
+assembleDebug:
+  stage: build
+  script:
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+    - app/build/outputs/
+
+debugTests:
+  stage: test
+  script:
+    - ./gradlew -Pci --console=plain :app:testDebug
+
+docGen:
+  stage: documentation
+  script:
+    - ./gradlew dokka
+
+deployStaging:
+  stage: deploy
+  only:
+     - /^Fabric/Staging/.*$/
+  script:
+   - fastlane deploy_staging
+
+deployProduction:
+  stage: deploy
+  only: 
+    - /^Fabric/Staging/.*$/
+  script:
+    - fastlane deploy_production
+
+deployRelease: 
+  stage: deploy
+  only:
+    -  /^GooglePlayStore/.*$/
+  script:
+    fastlane deploy_play_store
