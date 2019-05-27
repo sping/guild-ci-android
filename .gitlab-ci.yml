@@ -48,5 +48,7 @@ stages:
 
 deployBeta:
   stage: deploy
+  variables:
+    CI_DEBUG_TRACE: "true"
   script:
    - fastlane beta
