@@ -56,7 +56,7 @@ deployStaging:
 deployProduction:
   stage: deploy
   only: 
-    - /^Fabric/Staging/.*$/
+    - /^Fabric/Production/.*$/
   script:
     - fastlane deploy_production
 
