@@ -29,6 +29,7 @@ android:
     - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
     - yes | sdkmanager --update
     - yes | sdkmanager --licenses
+    - yes | sdkmanager "platforms;android-28"
     - cd project-folder/
     - gem update --system
     - gem install fastlane --no-rdoc --no-ri --no-document --quiet
